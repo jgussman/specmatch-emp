@@ -53,7 +53,7 @@ class Spectrum(object):
             self.serr = serr
 
         if mask is None:
-            self.mask = np.empty_like(s).astype(bool)
+            self.mask = np.zeros_like(s).astype(bool)
             self.mask.fill(True)
         else:
             self.mask = mask.astype(bool)
@@ -182,10 +182,10 @@ class Spectrum(object):
             w (np.ndarray): New wavlength array.
         """
         wavmap = np.searchsorted(w, self.w)
-        s_extend = np.empty_like(w, dtype=np.float)
+        s_extend = np.empty_like(w, dtype=np.float64)
         s_extend.fill(np.nan)
         s_extend[wavmap] = self.s
-        serr_extend = np.empty_like(w, dtype=np.float)
+        serr_extend = np.empty_like(w, dtype=np.float64)
         serr_extend.fill(np.nan)
         serr_extend[wavmap] = self.serr
         mask_extend = np.empty_like(w, dtype=bool)

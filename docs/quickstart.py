@@ -31,7 +31,7 @@ g = lib.library_params.groupby('source')
 colors = ['Red','Orange','LimeGreen','Cyan','RoyalBlue','Magenta','ForestGreen']
 i = 0
 for source, idx in g.groups.items():
-    cut = lib.library_params.ix[idx]
+    cut = lib.library_params.iloc[idx]
     color = colors[i]
     plot(
         cut.Teff, cut.radius,'+', label=source, color=color, alpha=1, ms=5, 
@@ -57,9 +57,8 @@ plot(lib.library_params.Teff, lib.library_params.radius,'b.', label='_nolegend_'
 plot(cut.Teff, cut.radius,'ro', label='Selected Stars')
 legend()
 smplot.label_axes('Teff','radius')
-fig.savefig('quickstart-library-selected-stars.png')
 # code-stop-library-selected-stars
-
+fig.savefig('quickstart-library-selected-stars.png')
 
 
 

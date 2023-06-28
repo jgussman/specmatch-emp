@@ -9,15 +9,16 @@ def download_file(url, outfile):
     """
     Download a file from a url and save it to outfile
 
-    :param url: url of file to download
-    :type url: str
-    :param outfile: path to save file to
-    :type outfile: str
+    Args: 
+        url (str): url of file to download
+        outfile (str): path to save file to
     """
-    r = requests.get(url, stream=True)
+    print("Downloading {0} to {1}".format(url, outfile))
+    headers = {'user-agent': 'Wget/1.16 (linux-gnu)'}
+    r = requests.get(url, stream=True, headers=headers)
     with open(outfile, 'wb') as f:
-        for chunk in r.iter_content(chunk_size=1024):
-            if chunk:  # filter out keep-alive new chunks
+        for chunk in r.iter_content(chunk_size=1024): 
+            if chunk:
                 f.write(chunk)
 
 
@@ -78,7 +79,8 @@ else:
             else:  # total size is unknown
                 sys.stderr.write("read %d\n" % (readsofar,))
 
-        LIBPATH = os.path.join(SPECMATCHDIR+"library.h5")
+        LIBPATH = os.path.join(SPECMATCHDIR,
+                               "library.h5")
         if not os.path.exists(LIBPATH):
             download_file("https://www.dropbox.com/s/po0kzgjn1j9ha2v/library.h5#", LIBPATH)
 

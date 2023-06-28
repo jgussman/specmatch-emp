@@ -302,7 +302,10 @@ class SpecMatch(object):
             ref_idxs = np.array(self.match_results.head(num_best).index)
             ref_chisq = np.array(self.match_results.head(num_best)[cs_col])
             spec_refs = self.lib.get_spectrum(ref_idxs)
+            if not isinstance(spec_refs, list):
+                spec_refs = [spec_refs]
             spec_refs = [s.cut(*reg) for s in spec_refs]
+
 
             vsini = []
             for i in range(num_best):
@@ -339,8 +342,8 @@ class SpecMatch(object):
             for i in range(len(lincomb_regions)):
                 self.results_nodetrend[p] += (self.lincomb_results[i][p] /
                                               len(lincomb_regions))
-           # Add uncertainties
-           self.results_nodetrend['u_'+p] = self._get_uncertainty(self.results_nodetrend[p], p)
+            # Add uncertainties
+            self.results_nodetrend['u_'+p] = self._get_uncertainty(self.results_nodetrend[p], p)
 
         # Detrend parameters
         d = detrend.Detrend()
