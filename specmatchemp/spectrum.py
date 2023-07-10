@@ -582,7 +582,7 @@ def read_hires_fits(infile, maskfile=None):
     w = hdu[2].data
     header = hdu[0].header
     hdu.close()
-
+    
     # Convert zeros to nans
     s[np.isclose(s, 0.0)] = np.nan
 
@@ -609,12 +609,19 @@ def read_apf_fits(infile, wavfile, maskfile=None):
     Returns:
         spec (HiresSpectrum): Spectrum object
     """
-    hdu = fits.open(infile)
-    s = hdu[0].data
+    header = None 
+    # hdu = fits.open(infile)
+    s = fits.getdata(infile).flatten()
+    
     serr = np.sqrt(s)
-    w = fits.getdata(wavfile)
-    header = hdu[0].header
-    hdu.close()
+    if wavfile.endswith(".fits"):
+        w = fits.getdata(wavfile)
+    elif wavfile.endswith(".npy"):
+        w = np.load(wavfile).flatten()
+    else:
+        raise ValueError("wavfile format not recognized (must be .fits or .npy)")
+    # header = hdu[0].header
+    # hdu.close()
 
     # Convert zeros to nans
     s[np.isclose(s, 0.0)] = np.nan
@@ -628,8 +635,14 @@ def read_apf_fits(infile, wavfile, maskfile=None):
         chip = os.path.basename(infile)[0:2]
         mask_table = mask_table[mask_table.chip.str.contains(chip)]
 
-    return HiresSpectrum(w, s, serr, name=name, mask_table=mask_table,
-                         header=header)
+
+    return HiresSpectrum(w, 
+                         s, 
+                         serr, 
+                         name=name, 
+                         mask_table=mask_table,
+                         header=header
+                         )
 
 
 

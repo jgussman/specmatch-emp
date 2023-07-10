@@ -94,7 +94,7 @@ M_star = lib.pop(idx2)
 
 # code-start-read-spectrum-G
 from specmatchemp import spectrum
-G_spectrum = spectrum.read_hires_fits('../samples/rj59.1923.fits').cut(5130,5210)
+G_spectrum = spectrum.read_hires_fits(r'specmatch_emp\samples\rj59.1923.fits').cut(5130,5210)
 G_spectrum.name = 'HD190406'
 # code-stop-read-spectrum-G
 
@@ -120,7 +120,7 @@ fig.savefig('quickstart-Gstar-shifts.png')
 
 # code-start-shift-spectrum-M
 # Load spectrum
-M_spectrum = spectrum.read_hires_fits('../samples/rj130.2075.fits').cut(5130,5210)
+M_spectrum = spectrum.read_hires_fits('specmatch_emp/samples/rj130.2075.fits').cut(5130,5210)
 M_spectrum.name = 'GL699'
 
 # Shift spectrum
