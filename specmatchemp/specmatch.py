@@ -3,34 +3,23 @@
 
 Class to carry out the specmatch
 """
-from six import string_types
-
-import os
 import csv
-import lmfit
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-
-import h5py
-import astropy.io.fits as fits
-
+import os
 from time import strftime
 
-from specmatchemp import SPECMATCHDIR
-from specmatchemp import SPECMATCH_VERSION
-from specmatchemp import SHIFT_REFERENCES
+import astropy.io.fits as fits
+import h5py
+import lmfit
+import matplotlib.gridspec as gridspec
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from six import string_types
+from specmatchemp import (SHIFT_REFERENCES, SPECMATCH_VERSION, SPECMATCHDIR,
+                          analysis, detrend, match, plots, shift, spectrum)
 from specmatchemp.io import h5plus
-from specmatchemp import spectrum
-from specmatchemp.spectrum import Spectrum
-from specmatchemp.spectrum import HiresSpectrum
 from specmatchemp.library import Library
-from specmatchemp import shift
-from specmatchemp import match
-from specmatchemp import analysis
-from specmatchemp import plots
-from specmatchemp import detrend
+from specmatchemp.spectrum import HiresSpectrum, Spectrum
 
 WAVLIM_DEFAULT = (5000, 5900)
 WAVSTEP_DEFAULT = 100
