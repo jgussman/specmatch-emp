@@ -6,13 +6,13 @@ Defines a spectrum object for use in SpecMatch-Emp
 
 import os
 from warnings import catch_warnings, filterwarnings
+
+import h5py
+import matplotlib.patches as patches
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import h5py
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 from astropy.io import fits
-
 from specmatchemp import plots
 
 
@@ -611,6 +611,7 @@ def read_apf_fits(infile, wavfile, maskfile=None):
     """
     header = None 
     # hdu = fits.open(infile)
+
     s = fits.getdata(infile).flatten()
     
     serr = np.sqrt(s)
@@ -694,3 +695,38 @@ def read_hdf(infile, suffix=""):
     else:
         return Spectrum(w, s, serr, mask=mask, name=name,
                         header=header, attrs=attrs)
+
+
+
+def read_chip_spectrum(normalized_spectra_dir, HIRES_id, wavelength):
+    ''' These spectra have already been passed through alpha-normalization and do not need
+    to be normalized again. The serr is the IVAR for the spectra.
+    
+    Args:
+        normalized_spectra_dir (str): Path to directory containing normalized spectra and IVAR
+        HIRES_id (str): HIRES ID of the star
+        wavelength (array): Wavelength array for the spectra
+        
+    Returns:
+        spec (HiresSpectrum): Spectrum object
+    '''
+ 
+    
+    # Read in the spectra
+    spectra = np.load(
+        os.path.join(normalized_spectra_dir, HIRES_id + "_specnorm.npy")
+                     )
+
+    # Read in the IVAR 
+    ivar = np.load(
+        os.path.join(normalized_spectra_dir, HIRES_id + "_sigmanorm.npy")
+                  )
+    
+
+    return HiresSpectrum(wavelength, 
+                        spectra, 
+                        ivar, 
+                        name= HIRES_id,
+                        )
+
+
