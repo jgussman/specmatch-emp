@@ -54,7 +54,7 @@ else:
         },
     )
 
-    HOMEDIR = os.environ['HOME']
+    HOMEDIR = os.path.expanduser("~")
     SPECMATCHDIR = "{0}/.specmatchemp/".format(HOMEDIR)
 
     # download library
