@@ -41,10 +41,6 @@ else:
         version="0.3",
         packages=find_packages(),
         install_requires=[
-            "h5py",
-            "lmfit",
-            "astroquery",
-            "isochrones",
         ],
         include_package_data=True,
         entry_points={
